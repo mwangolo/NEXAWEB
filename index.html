@@ -528,10 +528,31 @@
 </form>
 
 <!-- SUCCESS MESSAGE -->
-<div id="successMessage" style="display:none; margin-top:20px; padding:20px; background:#e6f7ff; color:#003366; border-left:5px solid #00aaff; border-radius:8px; text-align:center;">
+    <div id="successMessage" style="display:none; margin-top:20px; padding:20px; background:#e6f7ff; color:#003366; border-left:5px solid #00aaff; border-radius:8px; text-align:center; opacity:1; transition: opacity 1s;">
     <h3>✅ Request Sent Successfully!</h3>
     <p>Thank you for choosing <strong>NEXAWEB Technologies</strong>.<br>
     We will contact you within a few hours.</p>
+</div>
+
+<script>
+function showSuccessMessage() {
+    const msg = document.getElementById("successMessage");
+    msg.style.display = "block";
+    msg.style.opacity = "1"; // Make sure it's visible
+
+    // Wait 10 seconds, then fade out
+    setTimeout(() => {
+        msg.style.opacity = "0"; // Start fade out
+        // After transition ends, hide the element
+        setTimeout(() => {
+            msg.style.display = "none";
+        }, 1000); // matches CSS transition duration
+    }, 10000); // 10 seconds before fading
+}
+
+// Example usage: call showSuccessMessage() after form submission
+// showSuccessMessage();
+</script>
 </div>
             </div>
         </div>
