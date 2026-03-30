@@ -490,30 +490,48 @@
                 <a href="https://wa.me/254719477081" target="_blank" class="btn btn-primary" style="background:#25D366; width:100%; text-align:center;">📱 Chat on WhatsApp</a>
             </div>
             <div class="contact-form">
-                <form onsubmit="event.preventDefault(); alert('Thank you! Our team will contact you shortly.');">
-                    <div class="form-group">
-                        <label>Your Name</label>
-                        <input type="text" placeholder="John Doe" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" placeholder="john@example.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Package Interested In</label>
-                        <select id="pkg">
-                            <option value="">Select a package...</option>
-                            <option value="Starter">Starter ($299)</option>
-                            <option value="Professional">Professional ($799)</option>
-                            <option value="Enterprise">Enterprise ($1999)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea rows="4" placeholder="Briefly describe your project..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%;">Send Request</button>
-                </form>
+            
+<form name="contact" method="POST" data-netlify="true" id="contactForm">
+
+    <!-- Required for Netlify -->
+    <input type="hidden" name="form-name" value="contact">
+
+    <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" name="name" placeholder="John Doe" required>
+    </div>
+
+    <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="john@example.com" required>
+    </div>
+
+    <div class="form-group">
+        <label>Package Interested In</label>
+        <select name="package" id="pkg">
+            <option value="">Select a package...</option>
+            <option value="Starter">Starter ($299)</option>
+            <option value="Professional">Professional ($799)</option>
+            <option value="Enterprise">Enterprise ($1999)</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Message</label>
+        <textarea name="message" rows="4" placeholder="Briefly describe your project..."></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="width:100%;">
+        Send Request
+    </button>
+
+</form>
+
+<!-- SUCCESS MESSAGE -->
+<div id="successMessage" style="display:none; margin-top:20px; padding:20px; background:#e6f7ff; color:#003366; border-left:5px solid #00aaff; border-radius:8px;">
+    <strong>✔ Request Sent!</strong><br>
+    Thank you for contacting NEXAWEB Technologies. We’ll reply within a few hours.
+</div>
             </div>
         </div>
     </div>
@@ -561,6 +579,28 @@
             });
         });
     });
+</script>
+<script>
+const form = document.getElementById("contactForm");
+const successMessage = document.getElementById("successMessage");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch("/", {
+        method: "POST",
+        body: formData
+    })
+    .then(() => {
+        form.reset(); // clear inputs
+        successMessage.style.display = "block"; // show success message
+    })
+    .catch(() => {
+        alert("❌ Something went wrong. Try again.");
+    });
+});
 </script>
 
 </body>
